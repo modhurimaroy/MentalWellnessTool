@@ -1,5 +1,7 @@
 
 import joblib
+import json
+from datetime import datetime
 
 # Load Model
 pipe_lr = joblib.load(open("./emotion_classifier_pipe_lr.pkl", "rb"))
@@ -27,14 +29,39 @@ responses = {
 def respond_to_user(emotion):
     print("The model has detected that you are feeling " + emotion)
     print(responses[emotion])
+    return responses[emotion]
+
+
+def log_session_data(emotion, response_text, output_file="session_log.json"):
+    session_entry = {
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "time": datetime.now().strftime("%H:%M:%S"),
+        "emotion": emotion,
+        "response": response_text
+    }
+    
+    try:
+        with open(output_file, "r") as file:
+            data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = []
+    
+    data.append(session_entry)
+    
+    # Write updated data back to JSON file
+    with open(output_file, "w") as file:
+        json.dump(data, file, indent=4)
+    
+    print(f"Session data saved to {output_file}.")
 
 if __name__=="__main__":
     emotion_cats = pipe_lr.classes_
-    input = "why is life hard"
+    input = "I feel anxious"
     output = get_prediction_proba(input)
     results = dict(zip(emotion_cats, output))
     #print(results)
     emot = predict_emotions(input)
     #print(emot)
     #print(emotion_cats)
-    respond_to_user(emot)
+    response_text = respond_to_user(emot)
+    log_session_data(emot, response_text)
