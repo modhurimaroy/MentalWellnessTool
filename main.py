@@ -33,8 +33,22 @@ def respond_to_user(emotion):
     print(responses[emotion])
     if (emotion == 'anger')
         worksheet = anger_worksheet()
-    elif 
+    if (emotion == 'disgust')
+        worksheet = disgust_worksheet()
+    if (emotion == 'fear')
+        worksheet = fear_worksheet()
+    if (emotion == 'joy')
+        worksheet = joy_worksheet()
+    if (emotion == 'neutral')
+        worksheet = neutral_worksheet()
+    if (emotion == 'sadness')
+        worksheet = sadness_worksheet()
+    if (emotion == 'shame')
+        worksheet = shame_worksheet()
+    if (emotion == 'surprise')
+        worksheet = surprise_worksheet()
 
+    #alter session to save worksheet as well maybe?
     log_session_data(emotion, response_text, output_file="session_log.json")
 
 def question_answer(question) {
@@ -54,7 +68,8 @@ def joy_worksheet() {
         if resp == 'Y':
             act_done.append(act)
 
-    responses['activites'] = act_done            
+    responses['activites'] = act_done   
+    return responses         
 }
 
 
@@ -75,6 +90,7 @@ def fear_worksheet() {
                 "Sweating and chills", "Trembling muscles"]
 
     responses['symptoms'] = []
+    return responses
 }
 
 
