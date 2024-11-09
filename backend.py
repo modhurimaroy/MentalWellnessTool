@@ -1,9 +1,11 @@
 
 import joblib
-import json
-from datetime import datetime
 import warnings
 warnings.filterwarnings("ignore")
+import json
+from collections import Counter
+from datetime import datetime
+import matplotlib.pyplot as plt
 
 worksheets = {"no_emote": ["How are you feeling today"],
               "anger": ["What situation or event are you angry about?", 
@@ -88,14 +90,66 @@ def log_session_data(emotion, response_text, curr_worksheet, output_file="sessio
     
     print(f"Session data saved to {output_file}.")
 
-# if __name__=="__main__":
-#     emotion_cats = pipe_lr.classes_
-#     input = "I feel anxious"
-#     output = get_prediction_proba(input)
-#     results = dict(zip(emotion_cats, output))
-#     #print(results)
-#     emot = predict_emotions(input)
-#     #print(emot)
-#     #print(emotion_cats)
-#     response_text = respond_to_user(emot)
-#     log_session_data(emot, response_text)
+
+# Load session data from JSON
+def load_session_data(filename="session_log.json"):
+    with open(filename, "r") as file:
+        return json.load(file)
+
+# Trend analysis functions
+def count_emotions(data):
+    emotions = [entry["emotion"] for entry in data]
+    return Counter(emotions)
+
+def emotions_over_time(data):
+    dates = [entry["date"] for entry in data]
+    datewise_emotions = {}
+    for date, emotion in zip(dates, [entry["emotion"] for entry in data]):
+        if date not in datewise_emotions:
+            datewise_emotions[date] = Counter()
+        datewise_emotions[date][emotion] += 1
+    return datewise_emotions
+
+# Visualization functions
+def plot_emotion_frequency(emotion_counts):
+    plt.bar(emotion_counts.keys(), emotion_counts.values())
+    plt.xlabel("Emotion")
+    plt.ylabel("Frequency")
+    plt.title("Frequency of Emotions")
+    # plt.show()
+    plt.savefig("emotion_frequency_plot.png") 
+
+
+def plot_emotions_over_time(datewise_emotions):
+    for emotion in datewise_emotions[next(iter(datewise_emotions))].keys():
+        plt.plot(datewise_emotions.keys(), 
+                 [datewise_emotions[date].get(emotion, 0) for date in datewise_emotions], label=emotion)
+    plt.xlabel("Date")
+    plt.ylabel("Frequency")
+    plt.title("Emotion Trends Over Time")
+    plt.legend()
+    # plt.show()
+    plt.savefig("emotion_over-time_plot.png") 
+
+
+if __name__=="__main__":
+    emotion_cats = pipe_lr.classes_
+    input = "I feel anxious"
+    output = get_prediction_proba(input)
+    results = dict(zip(emotion_cats, output))
+    #print(results)
+    emot = predict_emotions(input)
+    #print(emot)
+    #print(emotion_cats)
+    response_text = respond_to_user(emot)
+    log_session_data(emot, response_text)
+    data = load_session_data()
+
+   
+    emotion_counts = count_emotions(data)
+    print("Emotion frequency:", emotion_counts)
+    plot_emotion_frequency(emotion_counts)
+
+    
+    datewise_emotions = emotions_over_time(data)
+    plot_emotions_over_time(datewise_emotions)
