@@ -31,33 +31,32 @@ responses = {
 def respond_to_user(emotion):
     print("The model has detected that you are feeling " + emotion)
     print(responses[emotion])
-    if (emotion == 'anger')
+    if (emotion == 'anger'):
         worksheet = anger_worksheet()
-    if (emotion == 'disgust')
+    if (emotion == 'disgust'):
         worksheet = disgust_worksheet()
-    if (emotion == 'fear')
+    if (emotion == 'fear'):
         worksheet = fear_worksheet()
-    if (emotion == 'joy')
+    if (emotion == 'joy'):
         worksheet = joy_worksheet()
-    if (emotion == 'neutral')
+    if (emotion == 'neutral'):
         worksheet = neutral_worksheet()
-    if (emotion == 'sadness')
+    if (emotion == 'sadness'):
         worksheet = sadness_worksheet()
-    if (emotion == 'shame')
+    if (emotion == 'shame'):
         worksheet = shame_worksheet()
-    if (emotion == 'surprise')
+    if (emotion == 'surprise'):
         worksheet = surprise_worksheet()
 
     #alter session to save worksheet as well maybe?
     log_session_data(emotion, response_text, output_file="session_log.json")
 
-def question_answer(question) {
+def question_answer(question): 
     input(question)
 
-}
 
 #https://www.therapistaid.com/therapy-worksheet/building-happiness-exercises
-def joy_worksheet() {
+def joy_worksheet(): 
     responses = {}
     responses['reason'] = input("Is there anything particular you are happy about?")
     print("Have you done any of the following? (Y/N)")
@@ -70,12 +69,12 @@ def joy_worksheet() {
 
     responses['activites'] = act_done   
     return responses         
-}
+
 
 
 #https://soniamcdonald.com.au/wp-content/uploads/2020/03/Fear_Mastery-1.pdf
 #https://www.webmd.com/mental-health/signs-of-fear
-def fear_worksheet() {
+def fear_worksheet():
     responses = {}
     responses['reason'] = input("Why are you afraid/anxious?")
     responses['feelings'] = input("How does this make you feel?")
@@ -91,27 +90,27 @@ def fear_worksheet() {
 
     responses['symptoms'] = []
     return responses
-}
 
 
-def surprise_worksheet() {
+
+def surprise_worksheet():
     output = input("How do you feel in response to this surprise? Anger, anxiety, joy, or nothing?")
     if output == 'anger':
         worksheet = anger_worksheet()
     elif output == 'anxiety':
         worksheet = fear_worksheet()
-    elif output == 'joy'
+    elif output == 'joy':
         worksheet = joy_worksheet()
-    else
+    else:
         worksheet = {}
 
     worksheet['response_emotion'] = output
     return worksheet
     
-}
+
 
 #https://www.therapistaid.com/therapy-worksheet/core-beliefs
-def shame_worksheet() {
+def shame_worksheet():
     responses = {}
     print("Shame occurs when we fail to meet our own personal standards or others' expectations")
     responses['situation'] = input("What situation made you feel shame?")
@@ -122,11 +121,11 @@ def shame_worksheet() {
     responses['belief'] = input("Enter one belief you experienced:")
     responses['evidence'] = input("Name three pieces of evidence contrary to this belief:")
     return responses
-}
+
 
 #https://www.therapistaid.com/therapy-worksheet/gratitude-journal-three-good-things
 #https://www.betterup.com/blog/what-to-do-when-you-are-sad
-def sadness_worksheet() {
+def sadness_worksheet():
     responses = {}
     responses['reason'] = input("Is there anything particular you are sad about?")
     print("It's ok to feel sad when faced with a negative situation. However, it's also important to take a step back and focus on the positive things in life.")
@@ -138,10 +137,10 @@ def sadness_worksheet() {
     print("Remember to reach out for help if you are feeling particularly sad. Some other things you can do to feel better are"\
     "listen to music, exercise, spend time with loved ones or spend time on a hobby")
     return responses
-}
+
 
 #https://eymtherapy.com/wp-content/uploads/2018/03/figuring-out-opposites.pdf
-def disgust_worksheet() {
+def disgust_worksheet():
     responses = {}
     responses["target"] = input("What person do you feel disgust at")
     responses["situation"] = input("What did that person do to make you feel disgust?")
@@ -152,11 +151,11 @@ def disgust_worksheet() {
         print("Remember to be kind to the person you feel contempt for as the action was not entirely their fault")
     else:
         print("If you really feel that way, it is best for you to have a conversation with that person and explain how you are feeling to them.")
-}
+
 
 #
 #https://www.therapistaid.com/therapy-worksheet/anger-warning-signs
-def anger_worksheet() {
+def anger_worksheet():
     responses = {}
     responses['situation'] = input('What situation or event are you angry about?')
     responses['context'] = input('Do you thing there is something deeper causing your anger?')
@@ -180,12 +179,12 @@ def anger_worksheet() {
     elif sign in ['Scowling', 'Went quiet', 'Cried', 'Paced around the room'] or signs == []:
         print("It looks like you are managing your anger in healthy ways!")
         responses['type'] = 'green'
-    else
+    else:
         print("Woah! It seems that your body is having an adverse physical reaction to anger. In the future, try to practice some deep breathing or muscle relaxing to calm your body")
         responses['type'] = 'yellow'
 
     return responses
-}
+
 
 def log_session_data(emotion, response_text, output_file="session_log.json"):
     session_entry = {
