@@ -1,7 +1,8 @@
 import dearpygui.dearpygui as dpg
+from backend import *
 
 # globals
-worksheet_steps = ["How are you feeling today?", "Step 2 Question", "Step 3 Question"]
+worksheet_steps = ["How are you feeling today?", "Step 2 Question", "Step 3 Question"] # need to add in these questions
 curr_step = 0
 
 
@@ -11,9 +12,9 @@ dpg.create_context()
 
 
 '''Other Helper Functions'''
-def update_prompt():
+def update_prompt(optional_text):
     if curr_step < len(worksheet_steps):
-        dpg.set_value("__prompt_text", value=worksheet_steps[curr_step])
+        dpg.set_value("__prompt_text", value= optional_text + "\n" + worksheet_steps[curr_step])
     else:
         dpg.set_value("__prompt_text", value="Journal entry and worksheet complete for today. \nAll input is logged if you ever want to go back and check your progress")
 
@@ -22,11 +23,16 @@ def update_prompt():
 '''The callback functions'''
 def retrieve_text_callback():
     global curr_step
-    input_text = dpg.get_value("__input_text") # may need to do processing of this input
+    response_text = ""
+    if curr_step == 0:
+        input_text = dpg.get_value("__input_text") # may need to do processing of this input
+        emot = predict_emotions(input_text)
+        response_text = respond_to_user(emot)
+        log_session_data(emot, response_text)
     #print(input_text) # for debugging
     dpg.set_value("__input_text", value="")
     curr_step = curr_step + 1 # increment the step
-    update_prompt()
+    update_prompt(response_text)
 
 
 
@@ -42,7 +48,7 @@ with dpg.window(label="journal.ai", tag = "journal"):
 
 
 
-dpg.create_viewport(title='journal.ai', width=640, height=480)
+dpg.create_viewport(title='journal.ai', width=800, height=480)
 dpg.setup_dearpygui()
 dpg.show_viewport()
 dpg.set_primary_window("journal", True)
