@@ -17,6 +17,7 @@ def update_prompt(optional_text):
     if curr_step < len(worksheets[emote]):
         dpg.set_value("__prompt_text", value= optional_text + "\n" + worksheets[emote][curr_step])
     else:
+        # add function to display trend
         dpg.set_value("__prompt_text", value="Journal entry and worksheet complete for today. \nAll input is logged if you ever want to go back and check your progress")
 
 
@@ -33,6 +34,7 @@ def retrieve_text_callback():
         response_text = respond_to_user(emot)
         log_session_data(emot, response_text)
     #else: 
+        #in the else scenario, its gonna be saving input to json file
 
     #print(input_text) # for debugging
     dpg.set_value("__input_text", value="")
