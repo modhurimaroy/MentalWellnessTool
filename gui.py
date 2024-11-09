@@ -1,12 +1,14 @@
 import dearpygui.dearpygui as dpg
 from backend import *
+import warnings
+warnings.filterwarnings("ignore")
 
 # globals
 #worksheet_steps = ["How are you feeling today?", "Step 2 Question", "Step 3 Question"] # need to add in these questions
 curr_step = 0
 emote = "no_emote"
 
-
+curr_worksheet = []
 
 dpg.create_context()
 #dpg.show_style_editor()
@@ -31,8 +33,14 @@ def retrieve_text_callback():
         emot = predict_emotions(input_text)
         emote = emot
         response_text = respond_to_user(emot)
-        log_session_data(emot, response_text)
+        #log_session_data(emot, response_text)
+    else:
+        curr_worksheet.append(dpg.get_value("__input_text"))
+
+    if curr_step == len(worksheets[emote]):
+        log_session_data(emote, response_text, curr_worksheet)
     #else: 
+
 
     #print(input_text) # for debugging
     dpg.set_value("__input_text", value="")
