@@ -38,7 +38,7 @@ def retrieve_text_callback():
     else:
         curr_worksheet.append(dpg.get_value("__input_text"))
 
-    if curr_step == len(worksheets[emote]):
+    if curr_step == len(worksheets[emote]) - 1:
         log_session_data(emote, response_text, curr_worksheet)
     #else: 
         #in the else scenario, its gonna be saving input to json file
