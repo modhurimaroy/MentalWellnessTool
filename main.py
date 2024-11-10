@@ -60,7 +60,7 @@ def joy_worksheet():
     responses = {}
     responses['reason'] = input("Is there anything particular you are happy about?")
     print("Have you done any of the following? (Y/N)")
-    activites = ['Donated to charity', 'Spent time with loved ones', 'Exercised', 'Meditated', 'Journaled', 'Helped someone out', 'Went to work', 'Started a new hobby', 'Performed an old hobby']
+    activities = ['Donated to charity', 'Spent time with loved ones', 'Exercised', 'Meditated', 'Journaled', 'Helped someone out', 'Went to work', 'Started a new hobby', 'Performed an old hobby']
     act_done = []
     for act in activites:
         resp = input(act)
