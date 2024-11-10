@@ -15,12 +15,32 @@ dpg.create_context()
 
 
 '''Other Helper Functions'''
+#the following function is from thiis github discussion page: https://github.com/hoffstadt/DearPyGui/discussions/1072
+def add_and_load_image(image_path, parent=None):
+    width, height, channels, data = dpg.load_image(image_path)
+
+    with dpg.texture_registry() as reg_id:
+        texture_id = dpg.add_static_texture(width, height, data, parent=reg_id)
+
+    if parent is None:
+        return dpg.add_image(texture_id, pos=[100, 320])
+    else:
+        return dpg.add_image(texture_id, pos=[100, 320], parent=parent)
+
+
 def update_prompt(optional_text):
     if curr_step < len(worksheets[emote]):
         dpg.set_value("__prompt_text", value= optional_text + "\n" + worksheets[emote][curr_step])
     else:
-        # add function to display trend
         dpg.set_value("__prompt_text", value="Journal entry and worksheet complete for today. \nAll input is logged if you ever want to go back and check your progress")
+        
+        #display trend
+        data = load_session_data()
+        emotion_counts = count_emotions(data)
+        plot_emotion_frequency(emotion_counts)
+        add_and_load_image("emotion_frequency_plot.png", parent="journal")
+       
+
 
 
 
@@ -123,7 +143,7 @@ def create_final_window():
     with dpg.window(label="Form", tag="final_window", width=1000, height=400, show=False, autosize=True):
         dpg.add_text("Journal entry and worksheet complete for today. \nAll input is logged if you ever want to go back and check your progress", tag="end")
 
-dpg.create_viewport(title='journal.ai', width=1000, height=480)
+dpg.create_viewport(title='journal.ai', width=1000, height=720)
 dpg.setup_dearpygui()
 dpg.show_viewport()
 dpg.set_primary_window("journal", True)
