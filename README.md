@@ -37,6 +37,34 @@ Due to the time constraints we weren't able to train our own model. Instead we u
 
 However, for a project essentially completed in under 24hrs due to timezone differences, we believe it showcases the main intent and vision of the project.
 
+## Links and sources we used
 
+For all the worksheets:
+
+https://positivepsychology.com/express-feelings/#worksheets 
+
+https://www.therapistaid.com/therapy-worksheet/building-happiness-exercises
+
+https://soniamcdonald.com.au/wp-content/uploads/2020/03/Fear_Mastery-1.pdf
+
+https://www.webmd.com/mental-health/signs-of-fear
+
+https://www.therapistaid.com/therapy-worksheet/core-beliefs
+
+https://www.therapistaid.com/therapy-worksheet/gratitude-journal-three-good-things
+
+https://www.betterup.com/blog/what-to-do-when-you-are-sad
+
+https://eymtherapy.com/wp-content/uploads/2018/03/figuring-out-opposites.pdf
+
+https://positive.b-cdn.net/wp-content/uploads/2021/11/Expressing-Anger.pdf
+
+https://www.therapistaid.com/therapy-worksheet/anger-warning-signs
+
+
+
+Pretrained AI model:
+
+https://github.com/SannketNikam/Emotion-Detection-in-Text. 
 
 
