@@ -55,7 +55,7 @@ https://www.therapistaid.com/therapy-worksheet/gratitude-journal-three-good-thin
 
 https://www.betterup.com/blog/what-to-do-when-you-are-sad
 
-#https://eymtherapy.com/wp-content/uploads/2018/03/figuring-out-opposites.pdf
+https://eymtherapy.com/wp-content/uploads/2018/03/figuring-out-opposites.pdf
 
 https://positive.b-cdn.net/wp-content/uploads/2021/11/Expressing-Anger.pdf
 
