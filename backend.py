@@ -5,7 +5,9 @@ warnings.filterwarnings("ignore")
 import json
 from collections import Counter
 from datetime import datetime
+import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use("Agg")
 
 worksheets = {"anger": [("What situation or event are you angry about?", "reason"), 
                         ("Do you thing there is something deeper causing your anger?", "self-reflection"), 
@@ -73,12 +75,11 @@ def respond_to_user(emotion):
     return responses[emotion]
 
 
-def log_session_data(emotion, response_text, curr_worksheet, output_file="session_log.json"):
+def log_session_data(emotion, curr_worksheet, output_file="session_log.json"):
     session_entry = {
         "date": datetime.now().strftime("%Y-%m-%d"),
         "time": datetime.now().strftime("%H:%M:%S"),
         "emotion": emotion,
-        "response": response_text,
         "worksheet":curr_worksheet
     }
     
@@ -122,7 +123,6 @@ def plot_emotion_frequency(emotion_counts):
     plt.xlabel("Emotion")
     plt.ylabel("Frequency")
     plt.title("Frequency of Emotions")
-    # plt.show()
     plt.savefig("emotion_frequency_plot.png") 
 
 
