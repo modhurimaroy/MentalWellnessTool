@@ -5,38 +5,44 @@ warnings.filterwarnings("ignore")
 import json
 from collections import Counter
 from datetime import datetime
+import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use("Agg")
 
-worksheets = {"no_emote": ["How are you feeling today"],
-              "anger": ["What situation or event are you angry about?", 
-                        "Do you thing there is something deeper causing your anger?", 
-                        "Why do you think the other people in this scenario acted the way they did?",
-                        "Do you think your level of anger is appropriate to what is happening?"], 
-              "disgust": ["What person do you feel disgust at?", 
-                          "What did that person do to make you feel disgust?", 
-                          "Is there a reason why that person might have acted that way?", 
-                          "Why do you think that person thought acting that way was okay? Did they act that way on purpose?"],
-              "fear": ["Why are you afraid/anxious?", 
-                       "How does this make you feel: helpless, alone, depair, insecure, or overwhelmed? \n It can be useful to narrow down your feelings.", 
-                       "What's the best-case scenario in this situation?", 
-                       "What's the worst that could happen in this situation?",
-                       "How can I prevent the worst to happen?",
-                       "If the worst does happen, what can I do to fix it? Maybe the worst case scenario is not as bad as you think"],
-              "joy": ["Is there anything particular you are happy about?", 
-                      "Have you done any of the following: donated to charity, spent time with loved ones, \nexcercised, meditated, journaled, helped someone out, \nwent to work, started a new hobby, did an old hobby? \n It can be good to reflect on the days you feel good as well."], 
-              "neutral": ["It can be good to reflect on this too. Maybe think about your day a little more and type how you feel"],
-              "sadness": ["Is there anything particular you are sad about?", 
-                          "It's ok to feel sad when faced with a negative situation.\nHowever, it's also important to take a step back and focus on the positive things in life. \nTry writing one good thing that happened today", 
-                          "What about something fun you did?", 
-                          "What is something that you accomplished today, no matter how small?", 
-                          "What can you be grateful for?", "Remember to reach out for help if you are feeling particularly sad. \nSome other things you can do to feel better are"\
-                          "listen to music, exercise, \nspend time with loved ones or spend time on a hobby"],
-              "shame": ["Shame occurs when we fail to meet our own personal standards or others' expectations, what situation made you feel shame?", 
-                        "What negative thoughts about yourself did this situation cause?", 
-                        "What self-belief did this situation cause: feeling unloveable, or worthless, or not good enough, or bad\n, or stupid, or ugly, or abnormal, or boring, or worthless?", 
-                        "Now that you've identified a feeling, name Name three pieces of evidence contrary to this belief"], 
-              "surprise": ["How do you feel in response to this surprise? Anger, anxiety, joy, or nothing?",
-                           "once you think you've identified a more accurate emotion, restart the program"]}
+worksheets = {"anger": [("What situation or event are you angry about?", "reason"), 
+                        ("Do you thing there is something deeper causing your anger?", "self-reflection"), 
+                        ("Why do you think the other people in this scenario acted the way they did?", "peer-reflection"),
+                        ("Do you think your level of anger is appropriate to what is happening?", "self-evaluation"),
+                        ("Which of the following ways have you reacted to your anger?", "signs",
+                        ['Mind went blank', 'Insulted the other person', 'Face turned red', 'Body or hands shook', 'Sweating',
+                        'Threw things', 'Heavy/fast breathing', 'Scowling', 'Screaming/yelling', 'Clenching fists', 'Felt hot/sick',
+                        'Punched walls', 'Went quiet', 'Cried', 'Paced around the room', 'Headaches'])], 
+              "disgust": [("What person do you feel disgust at?", "target"), 
+                          ("What did that person do to make you feel disgust?", "reason"), 
+                          ("Is there a reason why that person might have acted that way?", "peer-reflection"), 
+                          ("Why do you think that person thought acting that way was okay? Did they act that way on purpose?", "self-evaluation"),
+                          ("Do you think that reason makes it valid for that person to do that?", "evaluation", ["Yes"])],
+              "fear": [("Why are you afraid/anxious?", "reason"),
+                       ("How does this make you feel?", "feelings", ['helpless', 'alone', 'despair', 'insecure', 'overwhelmed']), 
+                       ("What's the best-case scenario in this situation?", "best-case-scenario"),
+                       ("What's the worst that could happen in this situation?", "worst-case-scenario"),
+                       ("How can I prevent the worst to happen?", "prevention"),
+                       ("If the worst does happen, what can I do to fix it?", "mitigation"),
+                       ("Have you experienced any physical symptoms?", "symptoms", 
+                       ["Increased heart rate", "Faster breathing or shortness of breath", "Butterflies or digestive changes"
+                            "Sweating and chills", "Trembling muscles"])],
+              "joy": [("Is there anything particular you are happy about?", "joy_reason"), 
+                      ("Have you done any of the following?", "activites", ['Donated to charity', 'Spent time with loved ones', 'Exercised', 'Meditated', 'Journaled', 'Helped someone out', 'Went to work', 'Started a new hobby', 'Performed an old hobby'])], 
+              "neutral": [("It can be good to reflect on this too. Maybe think about your day a little more and type how you feel", "reflection")],
+              "sadness": [ ("Is there anything particular you are sad about?", "reason"), 
+                          ("It's ok to feel sad when faced with a negative situation.\nHowever, it's also important to take a step back and focus on the positive things in life. \nTry writing one good thing that happened today", "good-thing"), 
+                          ("What about something fun you did?", "fun-thing"), 
+                          ("What is something that you accomplished today, no matter how small?", "accomplishment"), 
+                          ("What can you be grateful for?", "gratitude")],
+              "shame": [("Shame occurs when we fail to meet our own personal standards or others' expectations, what situation made you feel shame?", "reason"), 
+                        ("What negative thoughts about yourself did this situation cause?", "negative-thoughts"),
+                        ("What self-belief did this situation cause: feeling unloveable, or worthless, or not good enough, or bad\n, or stupid, or ugly, or abnormal, or boring, or worthless?" "self-beliefs"), 
+                        ("Now that you've identified a feeling, name three pieces of evidence contrary to this belief", "contary-evidence")]} 
 
 # Load Model
 pipe_lr = joblib.load(open("./emotion_classifier_pipe_lr.pkl", "rb"))
@@ -61,18 +67,19 @@ responses = {
     "surprise":"Sometimes surprises can bring up a mix of other feelings, too, like excitement, confusion, or even anxiety. \nLet’s talk through what happened"
 }
 
+
+
 def respond_to_user(emotion):
     print("The model has detected that you are feeling " + emotion)
     print(responses[emotion])
     return responses[emotion]
 
 
-def log_session_data(emotion, response_text, curr_worksheet, output_file="session_log.json"):
+def log_session_data(emotion, curr_worksheet, output_file="session_log.json"):
     session_entry = {
         "date": datetime.now().strftime("%Y-%m-%d"),
         "time": datetime.now().strftime("%H:%M:%S"),
         "emotion": emotion,
-        "response": response_text,
         "worksheet":curr_worksheet
     }
     
@@ -116,7 +123,6 @@ def plot_emotion_frequency(emotion_counts):
     plt.xlabel("Emotion")
     plt.ylabel("Frequency")
     plt.title("Frequency of Emotions")
-    # plt.show()
     plt.savefig("emotion_frequency_plot.png") 
 
 

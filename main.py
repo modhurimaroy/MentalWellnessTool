@@ -60,7 +60,7 @@ def joy_worksheet():
     responses = {}
     responses['reason'] = input("Is there anything particular you are happy about?")
     print("Have you done any of the following? (Y/N)")
-    activites = ['Donated to charity', 'Spent time with loved ones', 'Exercised', 'Meditated', 'Journaled', 'Helped someone out', 'Went to work', 'Started a new hobby', 'Performed an old hobby']
+    activities = ['Donated to charity', 'Spent time with loved ones', 'Exercised', 'Meditated', 'Journaled', 'Helped someone out', 'Went to work', 'Started a new hobby', 'Performed an old hobby']
     act_done = []
     for act in activites:
         resp = input(act)
@@ -153,7 +153,7 @@ def disgust_worksheet():
         print("If you really feel that way, it is best for you to have a conversation with that person and explain how you are feeling to them.")
 
 
-#
+#https://positive.b-cdn.net/wp-content/uploads/2021/11/Expressing-Anger.pdf
 #https://www.therapistaid.com/therapy-worksheet/anger-warning-signs
 def anger_worksheet():
     responses = {}
@@ -213,9 +213,6 @@ if __name__=="__main__":
     input = "I feel anxious"
     output = get_prediction_proba(input)
     results = dict(zip(emotion_cats, output))
-    #print(results)
     emot = predict_emotions(input)
-    #print(emot)
-    #print(emotion_cats)
     response_text = respond_to_user(emot)
     log_session_data(emot, response_text)
