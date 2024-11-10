@@ -1,7 +1,7 @@
 
 import joblib
-import json
-from datetime import datetime
+import warnings
+warnings.filterwarnings("ignore")
 import json
 from collections import Counter
 from datetime import datetime
@@ -67,12 +67,13 @@ def respond_to_user(emotion):
     return responses[emotion]
 
 
-def log_session_data(emotion, response_text, output_file="session_log.json"):
+def log_session_data(emotion, response_text, curr_worksheet, output_file="session_log.json"):
     session_entry = {
         "date": datetime.now().strftime("%Y-%m-%d"),
         "time": datetime.now().strftime("%H:%M:%S"),
         "emotion": emotion,
-        "response": response_text
+        "response": response_text,
+        "worksheet":curr_worksheet
     }
     
     try:
