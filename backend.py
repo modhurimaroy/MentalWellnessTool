@@ -58,13 +58,13 @@ def get_prediction_proba(docx):
 
 responses = {
     "anger":"Find yourself a safe place, away from others, where you will not be disturbed; \na place where you have time to calm down if you are feeling highly emotional. \nWriting down your feelings can help you understand them and become more comfortable with them: \nidentifying what is reasonable and unreasonable",
-    "disgust":"Disgust often comes up when we encounter something that deeply conflicts with our values \nor sense of self. Let’s explore where this feeling is coming from \nand how it’s impacting you. Together, we can work to understand it better and find ways to process \nit so that it feels less overwhelming.",
+    "disgust":"Disgust often comes up when we encounter something that deeply conflicts with our values \nor sense of self. Let's explore where this feeling is coming from \nand how it's impacting you. Together, we can work to understand it better and find ways to process \nit so that it feels less overwhelming.",
     "fear":"Let's take some time to explore where this fear might be coming from and how it's affecting you. \nSometimes breaking down what feels so big and intimidating \ncan help it feel more manageable",
     "joy":"That's wonderful to hear! It sounds like you've worked hard to reach this place, and you deserve this way.",
-    "neutral":"It sounds like you’re feeling pretty neutral right now—not particularly happy, sad, or anything in between. \nThat’s completely okay; feeling neutral is a \nnormal state to be in, and it can actually offer a lot of clarity and calm.",
+    "neutral":"It sounds like you're feeling pretty neutral right now - not particularly happy, sad, or anything in between. \nThat's completely okay; feeling neutral is a \nnormal state to be in, and it can actually offer a lot of clarity and calm.",
     "sadness":"It's okay to feel this way, and you're not alone in it. What do you think might be underneath this sadness?",
     "shame":"Let's talk about what happened and how you're feeling. Maybe we can look at it together with compassion, \nand explore how to start working toward self-forgiveness.",
-    "surprise":"Sometimes surprises can bring up a mix of other feelings, too, like excitement, confusion, or even anxiety. \nLet’s talk through what happened"
+    "surprise":"Sometimes surprises can bring up a mix of other feelings, too, like excitement, confusion, or even anxiety. \nLet's talk through what happened"
 }
 
 

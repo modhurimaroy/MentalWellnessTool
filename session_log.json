@@ -1,0 +1,58 @@
+[
+    {
+        "date": "2024-11-09",
+        "time": "21:16:06",
+        "emotion": "neutral",
+        "worksheet": {
+            "reflection": "I feel nothing"
+        }
+    },
+    {
+        "date": "2024-11-09",
+        "time": "21:16:27",
+        "emotion": "joy",
+        "worksheet": {
+            "joy_reason": "finished project early",
+            "activites": [
+                "Spent time with loved ones",
+                "Helped someone out",
+                "Went to work"
+            ]
+        }
+    },
+    {
+        "date": "2024-11-09",
+        "time": "21:17:10",
+        "emotion": "anger",
+        "worksheet": {
+            "reason": "stubbed my toe",
+            "self-reflection": "it hurts",
+            "peer-reflection": "table didn't care",
+            "self-evaluation": "yes",
+            "signs": [
+                "Face turned red",
+                "Scowling",
+                "Cried"
+            ]
+        }
+    },
+    {
+        "date": "2024-11-09",
+        "time": "21:17:53",
+        "emotion": "fear",
+        "worksheet": {
+            "reason": "worried about video",
+            "feelings": [
+                "helpless",
+                "despair"
+            ],
+            "best-case-scenario": "do really good",
+            "worst-case-scenario": "do really bad",
+            "prevention": "practice",
+            "mitigation": "nothing",
+            "symptoms": [
+                "Increased heart rate"
+            ]
+        }
+    }
+]
